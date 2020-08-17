@@ -3,10 +3,10 @@ import React from 'react'
 const person = (props) => {
   return (
     <div>
-      <p>
+      <p onClick={props.click}>
         I am {props.name} and age is {props.age}
-        {props.children}
       </p>
+      {props.children}
     </div>
   )
 }
