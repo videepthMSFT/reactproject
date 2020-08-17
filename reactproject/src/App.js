@@ -12,6 +12,7 @@ class App extends Component {
       { name: 'SHYAM', age: 28 },
     ],
     userName: 'VP',
+    toggle: false,
   }
 
   userNameChangeHandler = (event) => {
@@ -41,6 +42,12 @@ class App extends Component {
     })
   }
 
+  toggleHandler = () => {
+    this.setState({
+      toggle: !this.state.toggle,
+    })
+  }
+
   render() {
     const style = {
       backgroundColor: 'white',
@@ -53,25 +60,26 @@ class App extends Component {
     return (
       <div className="App">
         <h1>HI</h1>
-        <button
-          style={style}
-          onClick={this.switchNameHandler.bind(this, 'vishnu')}
-        >
+        <button style={style} onClick={this.toggleHandler}>
           Switch
         </button>
-        <Person
-          name={this.state.persons[0].name}
-          age="28"
-          click={() => this.switchNameHandler('praveen')}
-          changed={this.nameChangeHandler}
-        >
-          Vishnu is good
-        </Person>
-        <UserOutput userName={this.state.userName}></UserOutput>
-        <UserInput
-          userName={this.state.userName}
-          changed={this.userNameChangeHandler}
-        ></UserInput>
+        {this.state.toggle ? (
+          <div>
+            <Person
+              name={this.state.persons[0].name}
+              age="28"
+              click={() => this.switchNameHandler('praveen')}
+              changed={this.nameChangeHandler}
+            >
+              Vishnu is good
+            </Person>
+            <UserOutput userName={this.state.userName}></UserOutput>
+            <UserInput
+              userName={this.state.userName}
+              changed={this.userNameChangeHandler}
+            ></UserInput>
+          </div>
+        ) : null}
       </div>
     )
   }
