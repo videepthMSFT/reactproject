@@ -3,6 +3,8 @@ import './App.css'
 import Person from './Person/Person'
 import UserOutput from './User/UserOutput'
 import UserInput from './User/UserInput'
+import ValidationInput from './Validation/Validation'
+import CharInput from './Character/char'
 
 class App extends Component {
   state = {
@@ -13,11 +15,33 @@ class App extends Component {
     ],
     userName: 'VP',
     toggle: false,
+    lengthoftext: 0,
+    actualtext: null,
+    characters: null,
   }
 
-  userNameChangeHandler = (event) => {
+  textChangeHandler = (event) => {
+    const name = event.target.value
+    const length = name.length
+    const array = name.split('')
+
+    this.setState({ lengthoftext: length, actualtext: name, characters: array })
+  }
+
+  textDeletionHandler = (charIndex) => {
+    const chars = [...this.state.characters]
+    chars.splice(charIndex, 1)
+    this.setState({ characters: chars })
+
+    const textback = chars.join('')
+    this.setState({ actualtext: textback })
+
+    const array = textback.split('')
+
     this.setState({
-      userName: event.target.value,
+      lengthoftext: textback.length,
+      actualtext: textback,
+      characters: array,
     })
   }
 
@@ -78,19 +102,31 @@ class App extends Component {
                 />
               )
             })}
-            {/* <Person
-              name={this.state.persons[0].name}
-              age="28"
-              click={() => this.switchNameHandler('praveen')}
-              changed={this.nameChangeHandler}
-            >
-              Vishnu is good
-            </Person> */}
             <UserOutput userName={this.state.userName}></UserOutput>
             <UserInput
               userName={this.state.userName}
               changed={this.userNameChangeHandler}
             ></UserInput>
+            <hr />
+            <input
+              className="User"
+              onChange={this.textChangeHandler}
+              value={this.state.actualtext}
+            />
+            <p className="User">{this.state.lengthoftext}</p>
+            <ValidationInput length={this.state.lengthoftext}></ValidationInput>
+            {this.state.lengthoftext > 0
+              ? this.state.characters.map((character, index) => {
+                  return (
+                    <CharInput
+                      click={() => this.textDeletionHandler(index)}
+                      valueText={character}
+                      key={index}
+                    />
+                  )
+                })
+              : null}
+            {/* <CharInput valueText={this.state.actualtext} /> */}
           </div>
         ) : null}
       </div>
