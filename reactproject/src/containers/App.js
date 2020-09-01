@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import './App.css'
-import Person from './Person/Person'
-import UserOutput from './User/UserOutput'
-import UserInput from './User/UserInput'
-import ValidationInput from './Validation/Validation'
-import CharInput from './Character/char'
+import Persons from '../components/Persons/Persons'
+import UserOutput from '../User/UserOutput'
+import UserInput from '../User/UserInput'
+import ValidationInput from '../Validation/Validation'
+import CharInput from '../Character/char'
 
 class App extends Component {
   state = {
@@ -91,17 +91,12 @@ class App extends Component {
         </button>
         {this.state.toggle ? (
           <div>
-            {this.state.persons.map((person, index) => {
-              return (
-                <Person
-                  click={() => this.deletePersonhandler(index)}
-                  name={person.name}
-                  age={person.age}
-                  key={person.id}
-                  changed={(event) => this.nameChangeHandler(event, person.id)}
-                />
-              )
-            })}
+            <Persons
+              persons={this.state.persons}
+              clicked={this.deletePersonhandler}
+              changed={this.nameChangeHandler}
+            />
+
             <UserOutput userName={this.state.userName}></UserOutput>
             <UserInput
               userName={this.state.userName}
